@@ -47,11 +47,35 @@ module.exports = function(dbInyectada){
         return respuesta2;
      }
 
+     async function actualizar(body){
+        const usuario = {
+            id:body.id,
+            name: body.name,
+            activo: body.activo
+        }
+        //aca me va a devolver el id en el que se agrego
+        const respuesta = await db.actualizar(TABLA, usuario);
+
+        let insertId = 0;
+        insertId = body.id; //seria para actualizar
+        
+        let respuesta2 = '';
+        if (body.userName || body.password){
+            respuesta2 = await auth.actualizar({
+                id: insertId,
+                userName: body.userName,
+                password: body.password
+            })
+        }
+        return respuesta2;
+     }
+
      
     return{
         todos,
         uno,
         eliminar,
-        agregar
+        agregar, 
+        actualizar
     } 
 }

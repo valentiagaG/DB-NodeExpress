@@ -41,11 +41,28 @@ module.exports = function(dbInyectada){
             authData.password = await bcrypt.hash(data.password.toString(), 5);
         }
          return db.agregar(TABLA, authData);
-     }
+    }
+
+    async function actualizar(data){
+
+        const authData = {
+            id: data.id,
+        }
+
+        if (data.userName){
+            authData.userName = data.userName
+        }
+
+        if (data.password){
+            authData.password = await bcrypt.hash(data.password.toString(), 5);
+        }
+         return db.actualizar(TABLA, authData);
+    }
 
      
     return{
         agregar,
-        login
+        login,
+        actualizar
     } 
 }
